@@ -4,8 +4,8 @@
 using namespace std;
 
 class Camera {
-    char tip[30];
-    int pret;
+    char tip[30] = "";
+    int pret = 0;
 public:
     Camera() {};
 
@@ -28,18 +28,16 @@ public:
         return tip;
     }
 
-//    void setTip(char tip_[30]) {
+    //    void setTip(char tip_[30]) {
 //        strcpy(tip, tip_);
 //    }
 
     int getPret() const {
         return pret;
     }
-
 //    void setPret(int pret) {
 //        Camera::pret = pret;
 //    }
-
 };
 
 class Hotel {
@@ -69,8 +67,7 @@ public:
     char const *getNume() const {
         return nume;
     }
-
-//    void setNume(char nume_[30]) {
+    //    void setNume(char nume_[30]) {
 //        strcpy(nume, nume_);
 //    }
 
@@ -78,7 +75,7 @@ public:
         return rating;
     }
 
-//    void setRating(float ratingHotel) {
+    //    void setRating(float ratingHotel) {
 //        rating = ratingHotel;
 //    }
 
@@ -94,8 +91,8 @@ public:
         return camera;
     };
 
-    void setCamera(Camera *camera) {
-        this->camera = camera;
+    void setCamera(Camera *cameraNoua) {
+        this->camera = cameraNoua;
     }
 
     void cautareCamera(char tip[]) {
@@ -232,7 +229,7 @@ int main() {
 
             case 2: {
                 Hotel hotelNou;
-                int n;
+                int n = 0;
                 cin >> hotelNou;
                 cout << "Numarul de camere disponibile este:";
                 cin >> n;
@@ -325,6 +322,7 @@ int main() {
                 for (int i = 0; i < numarHoteluri - 1; i++) {
                     delete hoteluri[i];
                 }
+                delete[] hoteluri;
         }
     }
 
