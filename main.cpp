@@ -132,6 +132,7 @@ public:
         camere_disponibile++;
         Camera* c = new Camera(camera_);
         camera[camere_disponibile - 1] = c;
+        delete camera_;
     }
 
 
@@ -148,7 +149,6 @@ ostream &operator<<(ostream &out, const Hotel &hotel) {
     }
     return out;
 }
-
 ostream &operator<<(ostream &out, const Hotel*hotel) {
     out << "Numele hotelului: " << hotel->getNume() << endl;
     out << "Rating-ul hotelului: " << hotel->getRating() << endl;
@@ -168,7 +168,6 @@ istream &operator>>(istream &in, Hotel &hotel) {
     in >> hotel.rating;
     return in;
 }
-
 Camera* citesteCameraNoua() {
     char t[30];
     int p;
@@ -202,7 +201,6 @@ int main() {
     hotel2 += new Camera(cameraApartament, 450);
     hoteluri[1] = &hotel2;
     numarHoteluri++;
-
 
     bool quit = false;
     do {
@@ -320,6 +318,7 @@ int main() {
             case 0:
                 quit = true;
                 for (int i = 0; i < numarHoteluri - 1; i++) {
+                    delete hoteluri[i]->getCamera();
                     delete hoteluri[i];
                 }
                 delete[] hoteluri;
