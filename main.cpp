@@ -15,7 +15,7 @@ public:
         pret = pret_;
     }
 
-    Camera(const Camera *camera) {
+    explicit Camera(const Camera *camera) {
         strcpy(tip, camera->tip);
         pret = camera->pret;
     };
@@ -131,7 +131,7 @@ public:
     void operator+=(Camera *camera_) {
         camere_disponibile++;
         Camera* c = new Camera(camera_);
-        camera[camere_disponibile - 1] = c;
+        camera[camere_disponibile - 1] = *c;
         delete camera_;
     }
 
@@ -260,7 +260,7 @@ int main() {
                         for (int j = 0; j < m; j++) {
                             hoteluri[i]->setCamereDisponibile(hoteluri[i]->getCamereDisponibile() + 1);
                             Camera* arrayCamere = hoteluri[i]->getCamera();
-                            arrayCamere[hoteluri[i]->getCamereDisponibile() - 1] = citesteCameraNoua();
+                            arrayCamere[hoteluri[i]->getCamereDisponibile() - 1] = *citesteCameraNoua();
                             hoteluri[i]->setCamera(arrayCamere);
                         }
                         cout << hoteluri[i];
