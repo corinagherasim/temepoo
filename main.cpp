@@ -10,7 +10,7 @@ public:
     Camera() {};
 
     ///constructor de initializare
-    Camera(char *tip_, int pret_) {
+    Camera(char tip_[30], int pret_) {
         strcpy(tip, tip_);
         pret = pret_;
     }
@@ -60,11 +60,11 @@ class Hotel {
     char nume[30];
     float rating = 0;
     int camere_disponibile = 0;
-    Camera **camera = new Camera*[20];
+    Camera *camera = new Camera[20];
 
 public:
     ///constructor de initializare
-    Hotel(char *nume_, float rating_) {
+    Hotel(char nume_[30], float rating_) {
         strcpy(nume, nume_);
         rating = rating_;
     }
@@ -115,11 +115,11 @@ public:
         cout << nume << ' ' << rating << ' ' << camere_disponibile;
     }
 
-    Camera **getCamera() const{
+    Camera *getCamera() const{
         return camera;
     };
 
-    void setCamera(Camera **camera) {
+    void setCamera(Camera *camera) {
         this->camera = camera;
     }
 
@@ -127,9 +127,9 @@ public:
         int nr = 0;
         cout << "Camerele cautate sunt:" << endl;
         for (int i = 0; i < getCamereDisponibile(); i++)
-            if (strcmp(tip, camera[i]->getTip()) == 0) {
-                cout << "Tip camera:" << camera[i]->getTip() << endl;
-                cout << "Tarif:" << camera[i]->getPret() << "lei/noapte" << endl;
+            if (strcmp(tip, camera[i].getTip()) == 0) {
+                cout << "Tip camera:" << camera[i].getTip() << endl;
+                cout << "Tarif:" << camera[i].getPret() << "lei/noapte" << endl;
                 nr++;
             }
         cout << "Numarul camerelor cautate este:" << nr << endl;
@@ -171,8 +171,8 @@ ostream &operator<<(ostream &out, const Hotel &hotel) {
     out << "Rating-ul hotelului: " << hotel.rating << endl;
     out << "Numarul camerelor disponibile: " << hotel.camere_disponibile << endl;
     for (int i = 0; i < hotel.camere_disponibile; i++) {
-        cout << "Tip camera: " << hotel.camera[i]->getTip() << endl;
-        cout << "Tarif: " << hotel.camera[i]->getPret() << " lei/noapte" << endl;
+        cout << "Tip camera: " << hotel.camera[i].getTip() << endl;
+        cout << "Tarif: " << hotel.camera[i].getPret() << " lei/noapte" << endl;
     }
     return out;
 }
@@ -181,10 +181,10 @@ ostream &operator<<(ostream &out, const Hotel*hotel) {
     out << "Numele hotelului: " << hotel->getNume() << endl;
     out << "Rating-ul hotelului: " << hotel->getRating() << endl;
     out << "Numarul camerelor disponibile: " << hotel->getCamereDisponibile() << endl;
-    Camera** c = hotel->getCamera();
+    Camera* c = hotel->getCamera();
     for (int i = 0; i < hotel->getCamereDisponibile(); i++) {
-        out << "Tip camera: " << c[i]->getTip() << endl;
-        out << "Tarif: " << c[i]->getPret() << " lei/noapte" << endl;
+        out << "Tip camera: " << c[i].getTip() << endl;
+        out << "Tarif: " << c[i].getPret() << " lei/noapte" << endl;
     }
     return out;
 }
@@ -307,7 +307,7 @@ int main() {
                         cout << "Aceste camere(tip Single/Double/Triple/Apartament pret) sunt:";
                         for (int j = 0; j < m; j++) {
                             hoteluri[i]->setCamereDisponibile(hoteluri[i]->getCamereDisponibile() + 1);
-                            Camera** arrayCamere = hoteluri[i]->getCamera();
+                            Camera* arrayCamere = hoteluri[i]->getCamera();
                             arrayCamere[hoteluri[i]->getCamereDisponibile() - 1] = citesteCameraNoua();
                             hoteluri[i]->setCamera(arrayCamere);
                         }
