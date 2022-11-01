@@ -28,30 +28,17 @@ public:
         return tip;
     }
 
-    void setTip(char tip_[30]) {
-        strcpy(tip, tip_);
-    }
+//    void setTip(char tip_[30]) {
+//        strcpy(tip, tip_);
+//    }
 
     int getPret() const {
         return pret;
     }
 
-    void setPret(int pret) {
-        Camera::pret = pret;
-    }
-
-    void citire() {
-        char t[30];
-        int p;
-        cin >> t >> p;
-        strcpy(tip, t);
-        pret = p;
-    }
-
-    void afisareCamera() {
-        cout << "Tip camera:" << tip << endl;
-        cout << "Tarif:" << pret << ' ' << "lei/noapte" << endl;
-    }
+//    void setPret(int pret) {
+//        Camera::pret = pret;
+//    }
 
 };
 
@@ -79,28 +66,21 @@ public:
         nume[0] = 0;
     };
 
-    bool checkEmpty() {
-        if (rating == 0 && camere_disponibile == 0 && strlen(nume) == 0) {
-            return true;
-        }
-        return false;
-    }
-
     char const *getNume() const {
         return nume;
     }
 
-    void setNume(char nume_[30]) {
-        strcpy(nume, nume_);
-    }
+//    void setNume(char nume_[30]) {
+//        strcpy(nume, nume_);
+//    }
 
     float getRating() const {
         return rating;
     }
 
-    void setRating(float ratingHotel) {
-        rating = ratingHotel;
-    }
+//    void setRating(float ratingHotel) {
+//        rating = ratingHotel;
+//    }
 
     int getCamereDisponibile() const {
         return camere_disponibile;
@@ -108,10 +88,6 @@ public:
 
     void setCamereDisponibile(int camereDisponibile) {
         camere_disponibile = camereDisponibile;
-    }
-
-    void afisare() {
-        cout << nume << ' ' << rating << ' ' << camere_disponibile;
     }
 
     Camera *getCamera() const{
@@ -346,6 +322,9 @@ int main() {
 
             case 0:
                 quit = true;
+                for (int i = 0; i < numarHoteluri - 1; i++) {
+                    delete hoteluri[i];
+                }
         }
     }
 
