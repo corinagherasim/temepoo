@@ -56,7 +56,6 @@ public:
 };
 
 class Hotel {
-
     char nume[30];
     float rating = 0;
     int camere_disponibile = 0;
@@ -207,48 +206,30 @@ int main() {
     Hotel **hoteluri = new Hotel*[20];
     int numarHoteluri = 1;
 
-    Hotel hotel1("Hilton", 9.1);
-    hotel1 += new Camera("Single", 200);
-    hotel1 += new Camera("Double", 350);
-    hotel1 += new Camera("Single", 200);
-    hotel1 += new Camera("Triple", 400);
-    hotel1 += new Camera("Apartament", 500);
+    char numeHotel1[30] = "Hilton";
+    char cameraSingle[30] = "Single";
+    char cameraDouble[30] = "Double";
+    char cameraTriple[30] = "Triple";
+    char cameraApartament[30] = "Apartament";
+
+    Hotel hotel1(numeHotel1, 9.1);
+    hotel1 += new Camera(cameraSingle, 200);
+    hotel1 += new Camera(cameraDouble, 350);
+    hotel1 += new Camera(cameraSingle, 200);
+    hotel1 += new Camera(cameraTriple, 400);
+    hotel1 += new Camera(cameraApartament, 500);
     hoteluri[0] = &hotel1;
     numarHoteluri++;
 
-    Hotel hotel2("Ramada", 8.8);
-    hotel2 += new Camera("Single", 170);
-    hotel2 += new Camera("Double", 280);
-    hotel2 += new Camera("Single", 170);
-    hotel2 += new Camera("Apartament", 450);
+    char numeHotel2[30] = "Ramada";
+    Hotel hotel2(numeHotel2, 8.8);
+    hotel2 += new Camera(cameraSingle, 170);
+    hotel2 += new Camera(cameraDouble, 280);
+    hotel2 += new Camera(cameraSingle, 170);
+    hotel2 += new Camera(cameraApartament, 450);
     hoteluri[1] = &hotel2;
     numarHoteluri++;
 
-    Hotel hotel3("Rin", 8.5);
-    hotel3 += new Camera("Single", 140);
-    hotel3 += new Camera("Double", 250);
-    hotel3 += new Camera("Double", 250);
-    hotel3 += new Camera("Triple", 340);
-    hotel3 += new Camera("Apartament", 500);
-    hotel3 += new Camera("Apartament", 450);
-    hoteluri[2] = &hotel3;
-    numarHoteluri++;
-
-    Hotel hotel4("Gara", 6.9);
-    hotel4 += new Camera("Single", 90);
-    hotel4 += new Camera("Single", 80);
-    hotel4 += new Camera("Single", 90);
-    hotel4 += new Camera("Double", 170);
-    hotel4 += new Camera("Double", 150);
-    hoteluri[3] = &hotel4;
-    numarHoteluri++;
-
-    Hotel hotel5("Mojo", 7.8);
-    hotel5 += new Camera("Single", 120);
-    hotel5 += new Camera("Double", 230);
-    hotel5 += new Camera("Apartament", 380);
-    hoteluri[4] = &hotel5;
-    numarHoteluri++;
 
     bool quit = false;
     do {
