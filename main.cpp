@@ -190,10 +190,10 @@ ostream &operator<<(ostream &out, const Hotel*hotel) {
 
 istream &operator>>(istream &in, Hotel &hotel) {
     cout << endl << "Numele hotelului: ";
-    cin >> hotel.nume;
+    in >> hotel.nume;
     cout << endl << "Rating-ul hotelului: ";
-    cin >> hotel.rating;
-    return cin;
+    in >> hotel.rating;
+    return in;
 }
 
 Camera* citesteCameraNoua() {
