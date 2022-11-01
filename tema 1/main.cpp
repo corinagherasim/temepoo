@@ -115,7 +115,13 @@ public:
         cout << nume << ' ' << rating << ' ' << camere_disponibile;
     }
 
-    Camera **getCamera() const;
+    Camera **getCamera() const{
+        return camera;
+    };
+
+    void setCamera(Camera **camera) {
+        this->camera = camera;
+    }
 
     void cautareCamera(char tip[]) {
         int nr = 0;
@@ -156,7 +162,6 @@ public:
         camera[camere_disponibile - 1] = c;
     }
 
-    void setCamera(Camera **camera);
 
 };
 
@@ -190,15 +195,6 @@ istream &operator>>(istream &in, Hotel &hotel) {
     cout << endl << "Rating-ul hotelului: ";
     cin >> hotel.rating;
     return cin;
-}
-
-Camera **Hotel::getCamera() const {
-    return camera;
-
-}
-
-void Hotel::setCamera(Camera **camera) {
-    Hotel::camera = camera;
 }
 
 Camera* citesteCameraNoua() {
