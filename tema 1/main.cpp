@@ -362,13 +362,13 @@ int main() {
                 break;
             }
 
-            case 0:
-                quit = true;
-
             default: {
                 cout << "Numar invalid." << endl;
                 break;
             }
+
+            case 0:
+                quit = true;
         }
     }
 
