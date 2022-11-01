@@ -4,18 +4,18 @@
 using namespace std;
 
 class Camera {
-    char tip[30];
-    int pret;
+    char tip[30] = "";
+    int pret = 0;
 public:
     Camera() {};
 
     ///constructor de initializare
-    Camera(char *tip_, int pret_) {
+    Camera(char tip_[30], int pret_) {
         strcpy(tip, tip_);
         pret = pret_;
     }
 
-    Camera(const Camera *camera) {
+    explicit Camera(const Camera *camera) {
         strcpy(tip, camera->tip);
         pret = camera->pret;
     };
@@ -28,43 +28,27 @@ public:
         return tip;
     }
 
-    void setTip(char tip_[30]) {
-        strcpy(tip, tip_);
-    }
+    //    void setTip(char tip_[30]) {
+//        strcpy(tip, tip_);
+//    }
 
     int getPret() const {
         return pret;
     }
-
-    void setPret(int pret) {
-        Camera::pret = pret;
-    }
-
-    void citire() {
-        char t[30];
-        int p;
-        cin >> t >> p;
-        strcpy(tip, t);
-        pret = p;
-    }
-
-    void afisareCamera() {
-        cout << "Tip camera:" << tip << endl;
-        cout << "Tarif:" << pret << ' ' << "lei/noapte" << endl;
-    }
-
+//    void setPret(int pret) {
+//        Camera::pret = pret;
+//    }
 };
 
 class Hotel {
-
     char nume[30];
     float rating = 0;
     int camere_disponibile = 0;
-    Camera **camera = new Camera*[20];
+    Camera *camera = new Camera[20];
 
 public:
     ///constructor de initializare
-    Hotel(char *nume_, float rating_) {
+    Hotel(char nume_[30], float rating_) {
         strcpy(nume, nume_);
         rating = rating_;
     }
@@ -80,28 +64,20 @@ public:
         nume[0] = 0;
     };
 
-    bool checkEmpty() {
-        if (rating == 0 && camere_disponibile == 0 && strlen(nume) == 0) {
-            return true;
-        }
-        return false;
-    }
-
     char const *getNume() const {
         return nume;
     }
-
-    void setNume(char nume_[30]) {
-        strcpy(nume, nume_);
-    }
+    //    void setNume(char nume_[30]) {
+//        strcpy(nume, nume_);
+//    }
 
     float getRating() const {
         return rating;
     }
 
-    void setRating(float ratingHotel) {
-        rating = ratingHotel;
-    }
+    //    void setRating(float ratingHotel) {
+//        rating = ratingHotel;
+//    }
 
     int getCamereDisponibile() const {
         return camere_disponibile;
@@ -111,25 +87,21 @@ public:
         camere_disponibile = camereDisponibile;
     }
 
-    void afisare() {
-        cout << nume << ' ' << rating << ' ' << camere_disponibile;
-    }
-
-    Camera **getCamera() const{
+    Camera *getCamera() const{
         return camera;
     };
 
-    void setCamera(Camera **camera) {
-        this->camera = camera;
+    void setCamera(Camera *cameraNoua) {
+        this->camera = cameraNoua;
     }
 
     void cautareCamera(char tip[]) {
         int nr = 0;
         cout << "Camerele cautate sunt:" << endl;
         for (int i = 0; i < getCamereDisponibile(); i++)
-            if (strcmp(tip, camera[i]->getTip()) == 0) {
-                cout << "Tip camera:" << camera[i]->getTip() << endl;
-                cout << "Tarif:" << camera[i]->getPret() << "lei/noapte" << endl;
+            if (strcmp(tip, camera[i].getTip()) == 0) {
+                cout << "Tip camera:" << camera[i].getTip() << endl;
+                cout << "Tarif:" << camera[i].getPret() << "lei/noapte" << endl;
                 nr++;
             }
         cout << "Numarul camerelor cautate este:" << nr << endl;
@@ -159,7 +131,8 @@ public:
     void operator+=(Camera *camera_) {
         camere_disponibile++;
         Camera* c = new Camera(camera_);
-        camera[camere_disponibile - 1] = c;
+        camera[camere_disponibile - 1] = *c;
+        delete camera_;
     }
 
 
@@ -171,32 +144,30 @@ ostream &operator<<(ostream &out, const Hotel &hotel) {
     out << "Rating-ul hotelului: " << hotel.rating << endl;
     out << "Numarul camerelor disponibile: " << hotel.camere_disponibile << endl;
     for (int i = 0; i < hotel.camere_disponibile; i++) {
-        cout << "Tip camera: " << hotel.camera[i]->getTip() << endl;
-        cout << "Tarif: " << hotel.camera[i]->getPret() << " lei/noapte" << endl;
+        cout << "Tip camera: " << hotel.camera[i].getTip() << endl;
+        cout << "Tarif: " << hotel.camera[i].getPret() << " lei/noapte" << endl;
     }
     return out;
 }
-
 ostream &operator<<(ostream &out, const Hotel*hotel) {
     out << "Numele hotelului: " << hotel->getNume() << endl;
     out << "Rating-ul hotelului: " << hotel->getRating() << endl;
     out << "Numarul camerelor disponibile: " << hotel->getCamereDisponibile() << endl;
-    Camera** c = hotel->getCamera();
+    Camera* c = hotel->getCamera();
     for (int i = 0; i < hotel->getCamereDisponibile(); i++) {
-        out << "Tip camera: " << c[i]->getTip() << endl;
-        out << "Tarif: " << c[i]->getPret() << " lei/noapte" << endl;
+        out << "Tip camera: " << c[i].getTip() << endl;
+        out << "Tarif: " << c[i].getPret() << " lei/noapte" << endl;
     }
     return out;
 }
 
 istream &operator>>(istream &in, Hotel &hotel) {
     cout << endl << "Numele hotelului: ";
-    cin >> hotel.nume;
+    in >> hotel.nume;
     cout << endl << "Rating-ul hotelului: ";
-    cin >> hotel.rating;
-    return cin;
+    in >> hotel.rating;
+    return in;
 }
-
 Camera* citesteCameraNoua() {
     char t[30];
     int p;
@@ -207,47 +178,28 @@ int main() {
     Hotel **hoteluri = new Hotel*[20];
     int numarHoteluri = 1;
 
-    Hotel hotel1("Hilton", 9.1);
-    hotel1 += new Camera("Single", 200);
-    hotel1 += new Camera("Double", 350);
-    hotel1 += new Camera("Single", 200);
-    hotel1 += new Camera("Triple", 400);
-    hotel1 += new Camera("Apartament", 500);
+    char numeHotel1[30] = "Hilton";
+    char cameraSingle[30] = "Single";
+    char cameraDouble[30] = "Double";
+    char cameraTriple[30] = "Triple";
+    char cameraApartament[30] = "Apartament";
+
+    Hotel hotel1(numeHotel1, 9.1);
+    hotel1 += new Camera(cameraSingle, 200);
+    hotel1 += new Camera(cameraDouble, 350);
+    hotel1 += new Camera(cameraSingle, 200);
+    hotel1 += new Camera(cameraTriple, 400);
+    hotel1 += new Camera(cameraApartament, 500);
     hoteluri[0] = &hotel1;
     numarHoteluri++;
 
-    Hotel hotel2("Ramada", 8.8);
-    hotel2 += new Camera("Single", 170);
-    hotel2 += new Camera("Double", 280);
-    hotel2 += new Camera("Single", 170);
-    hotel2 += new Camera("Apartament", 450);
+    char numeHotel2[30] = "Ramada";
+    Hotel hotel2(numeHotel2, 8.8);
+    hotel2 += new Camera(cameraSingle, 170);
+    hotel2 += new Camera(cameraDouble, 280);
+    hotel2 += new Camera(cameraSingle, 170);
+    hotel2 += new Camera(cameraApartament, 450);
     hoteluri[1] = &hotel2;
-    numarHoteluri++;
-
-    Hotel hotel3("Rin", 8.5);
-    hotel3 += new Camera("Single", 140);
-    hotel3 += new Camera("Double", 250);
-    hotel3 += new Camera("Double", 250);
-    hotel3 += new Camera("Triple", 340);
-    hotel3 += new Camera("Apartament", 500);
-    hotel3 += new Camera("Apartament", 450);
-    hoteluri[2] = &hotel3;
-    numarHoteluri++;
-
-    Hotel hotel4("Gara", 6.9);
-    hotel4 += new Camera("Single", 90);
-    hotel4 += new Camera("Single", 80);
-    hotel4 += new Camera("Single", 90);
-    hotel4 += new Camera("Double", 170);
-    hotel4 += new Camera("Double", 150);
-    hoteluri[3] = &hotel4;
-    numarHoteluri++;
-
-    Hotel hotel5("Mojo", 7.8);
-    hotel5 += new Camera("Single", 120);
-    hotel5 += new Camera("Double", 230);
-    hotel5 += new Camera("Apartament", 380);
-    hoteluri[4] = &hotel5;
     numarHoteluri++;
 
     bool quit = false;
@@ -275,7 +227,7 @@ int main() {
 
             case 2: {
                 Hotel hotelNou;
-                int n;
+                int n = 0;
                 cin >> hotelNou;
                 cout << "Numarul de camere disponibile este:";
                 cin >> n;
@@ -307,8 +259,8 @@ int main() {
                         cout << "Aceste camere(tip Single/Double/Triple/Apartament pret) sunt:";
                         for (int j = 0; j < m; j++) {
                             hoteluri[i]->setCamereDisponibile(hoteluri[i]->getCamereDisponibile() + 1);
-                            Camera** arrayCamere = hoteluri[i]->getCamera();
-                            arrayCamere[hoteluri[i]->getCamereDisponibile() - 1] = citesteCameraNoua();
+                            Camera* arrayCamere = hoteluri[i]->getCamera();
+                            arrayCamere[hoteluri[i]->getCamereDisponibile() - 1] = *citesteCameraNoua();
                             hoteluri[i]->setCamera(arrayCamere);
                         }
                         cout << hoteluri[i];
@@ -365,6 +317,11 @@ int main() {
 
             case 0:
                 quit = true;
+                for (int i = 0; i < numarHoteluri - 1; i++) {
+                    delete hoteluri[i]->getCamera();
+                    delete hoteluri[i];
+                }
+                delete[] hoteluri;
         }
     }
 
